@@ -1,0 +1,42 @@
+{
+
+  "manifest_version": 2,
+  "name": "Kindle Annotation Downloader",
+  "version": "1.0",
+
+  "description": "When visiting your Amazon kindle hightlights page, download the current book's highlights and notes",
+  "homepage_url": "https://www.drogers.us",
+  "icons": {
+    "32": "icons/dr-icon-32.png",
+    "48": "icons/dr-icon-48.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "downloads"
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/js/jquery-3.4.1.js","content_scripts/kindle_page.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/dr-icon-32.png",
+    "default_title": "KAD",
+    "default_popup": "popup/button.html"
+  },
+
+  "web_accessible_resources": [
+  ]
+
+}
+
