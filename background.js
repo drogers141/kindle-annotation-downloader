@@ -19,7 +19,7 @@ function notify(message) {
             browser.storage.local.get()
                 .then((itemsObject) => {
                     console.log("background retrieved: ", itemsObject);
-                    download(itemsObject);
+                    // download(itemsObject);
                 })
                 .catch(reportError)
         } else {
