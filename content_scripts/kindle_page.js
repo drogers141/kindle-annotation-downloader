@@ -8,6 +8,7 @@
     return;
   }
   window.hasRun = true;
+  window.URL = window.URL || window.webkitURL;
 
   function reportError(error) {
     console.error(`kindle_page.js error: ${error}`);
@@ -30,21 +31,36 @@
           });
         })
         .catch(reportError);
-  }
-
-  function activeBookInfo() {
-
+        // .then(() => {
+        //   let json = JSON.stringify(activeBookMeta);
+        //   let downloadFile = new File(activeBookMeta, "activeBookMeta.json");
+        //   let url = window.URL.createObjectURL(downloadFile);
+        //   // browser.runtime.sendMessage({
+        //   //   "target": "background",
+        //   //   "command": "download",
+        //   //   "url":
+        //   // })
+        //   // let url = window.URL.createObjectURL(
+        //   //     new File(activeBookMeta
+        //   // );
+        //   console.log("created object url: ", url)
+        //   browser.runtime.sendMessage({
+        //     "target": "background",
+        //     "command": "download",
+        //     "url": url,
+        //     "filename": downloadFile.name //"activeBookMeta.json"
+        //   });
+        // })
+        // .catch(reportError);
   }
 
 
   browser.runtime.onMessage.addListener((message) => {
     if (message.command === "execute") {
-      alert("got execute!")
-      const val = doSomething().then(() => console.log("done doSomething"));
+      doSomething()
+          .then(() => console.log("done doSomething"))
+          .catch(reportError);
     } else if (message.target === "kindle_page") {
-      if (message.hasOwnProperty("url")) {
-        console.lo
-      }
       console.log("got message from background: " + message.message);
     }
   });

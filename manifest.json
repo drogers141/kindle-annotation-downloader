@@ -19,13 +19,20 @@
   ],
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js",
+      "assets/js/moment.js"
+    ]
   },
 
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["assets/js/jquery-3.4.1.js","content_scripts/kindle_page.js"]
+      "js": [
+        "assets/js/jquery-3.4.1.js",
+        "assets/js/moment.js",
+        "content_scripts/kindle_page.js"
+      ]
     }
   ],
 
