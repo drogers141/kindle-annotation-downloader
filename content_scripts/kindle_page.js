@@ -44,7 +44,10 @@
         let metadata = $(node).find(".kp-notebook-metadata").first().text();
         console.log("highlight metadata: ", metadata);
         let highlight = $(node).find(".kp-notebook-highlight").first().text();
-        let note = $(node).find(".kp-notebook-note").first().text();
+        var note = $(node).find(".kp-notebook-note").first().text();
+        if (note.startsWith("Note:")) {
+            note = note.replace("Note:", "")
+        }
         let nodeData = {"metadata": metadata, "highlight": highlight, "note": note};
         console.log("nodeData", nodeData);
         return nodeData
@@ -59,14 +62,15 @@
         //     parseAnnotationNode(node);
         // })
         let annotationObjects = annotationNodes.map((index, node) => {
-            parseAnnotationNode(node);
-        });
+            return parseAnnotationNode(node);
+        }).get();
         return {"metadata": meta, "annotationCounts": annotationCts, "annotations": annotationObjects};
     }
 
     // todo - use storage change notification instead?
     function scrapeStoreAndNotifyBackend() {
         let activeBookMeta = scrapeActiveBook();
+        console.log("activeBookMeta:\n", activeBookMeta);
         return browser.storage.local.set({"activeBookMeta": activeBookMeta})
             .then(() => {
                 console.log("stored active book:\n" + activeBookMeta);
