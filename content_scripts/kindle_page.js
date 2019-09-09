@@ -43,16 +43,25 @@
         console.log("node text:\n" + $(node).text());
         let metadata = $(node).find(".kp-notebook-metadata").first().text();
         console.log("highlight metadata: ", metadata);
+        let highlight = $(node).find(".kp-notebook-highlight").first().text();
+        let note = $(node).find(".kp-notebook-note").first().text();
+        let nodeData = {"metadata": metadata, "highlight": highlight, "note": note};
+        console.log("nodeData", nodeData);
+        return nodeData
     }
 
     function scrapeActiveBook() {
         let meta = activeBookMeta();
         let annotationCts = annotationCounts();
         let annotationNodes = $("#annotation-scroller .kp-notebook-row-separator").slice(1);
-        jQuery.each(annotationNodes.slice(1,4), (index, node) => {
+        // let annotationNodes = $("#annotation-scroller .kp-notebook-row-separator").slice(1,10);
+        // jQuery.each(annotationNodes.slice(1,4), (index, node) => {
+        //     parseAnnotationNode(node);
+        // })
+        let annotationObjects = annotationNodes.map((index, node) => {
             parseAnnotationNode(node);
-        })
-        return {"metadata": meta, "annotationCounts": annotationCts};
+        });
+        return {"metadata": meta, "annotationCounts": annotationCts, "annotations": annotationObjects};
     }
 
     // todo - use storage change notification instead?
