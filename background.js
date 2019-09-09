@@ -15,7 +15,7 @@ function notify(message) {
         if (message.command == "check_storage") {
             browser.storage.local.get()
                 .then((itemsObject) => {
-                    console.log("background retrieved: ", itemsObject);
+                    console.log("background retrieved storage");
                     let blob = new Blob([JSON.stringify(itemsObject)]);
                     let url = URL.createObjectURL(blob);
                     let timestampString = moment().format().replace(/:/g, '.')

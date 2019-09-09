@@ -14,6 +14,17 @@
         console.error(`kindle_page.js error: ${error}`);
     }
 
+    /**
+     * Remove illegal characters to form a filename or storage key.
+     * Adjust as needed.
+     *
+     * @param s
+     * @returns {void | string}
+     */
+    function sanitizeStringForName(s) {
+        return s.replace(/[^a-z0-9]/gi, '_')
+    }
+
     /*
       Returns {"title":, "authorString":, "lastAccessed": datetime str with tz}
       all strings
@@ -70,10 +81,14 @@
     // todo - use storage change notification instead?
     function scrapeStoreAndNotifyBackend() {
         let activeBookMeta = scrapeActiveBook();
-        console.log("activeBookMeta:\n", activeBookMeta);
-        return browser.storage.local.set({"activeBookMeta": activeBookMeta})
+        // todo maybe - change this to store by ISBN
+        // which requires a fetch to amazon
+        let sanitizedTitle = sanitizeStringForName(activeBookMeta.metadata.title);
+        // console.log("activeBookMeta:\n", activeBookMeta);
+        return browser.storage.local.set({[sanitizedTitle]: activeBookMeta})
             .then(() => {
-                console.log("stored active book:\n" + activeBookMeta);
+                console.log("stored active book: " + activeBookMeta.metadata.title);
+                console.log("sanitized title: " + sanitizedTitle);
                 browser.runtime.sendMessage({
                     "target": "background",
                     "command": "check_storage",
