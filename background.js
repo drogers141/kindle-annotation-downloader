@@ -13,7 +13,7 @@ function reportError(error) {
 function notify(message) {
     if (message.target == "background") {
         if (message.command == "check_storage") {
-            browser.storage.local.get()
+            browser.storage.local.get(message.storage_key)
                 .then((itemsObject) => {
                     console.log("background retrieved storage");
                     let blob = new Blob([JSON.stringify(itemsObject)]);
@@ -22,7 +22,8 @@ function notify(message) {
                     console.log("timestamp: ", timestampString);
                     browser.downloads.download({
                         url: url,
-                        filename: "activeBookMeta." + timestampString + ".json",
+                        filename: message.storage_key + ".json",
+                        conflictAction: "overwrite",
                         saveAs: false
                     });
                     // var json = JSON.stringify(itemsObject);

@@ -92,7 +92,8 @@
                 browser.runtime.sendMessage({
                     "target": "background",
                     "command": "check_storage",
-                    "message": "check stored data"
+                    "storage_key": sanitizedTitle,
+                    "message": "book stored/updated"
                 });
             })
             .catch(reportError);
