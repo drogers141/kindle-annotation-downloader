@@ -51,16 +51,16 @@
     }
 
     function parseAnnotationNode(node) {
-        console.log("node text:\n" + $(node).text());
+        // console.log("node text:\n" + $(node).text());
         let metadata = $(node).find(".kp-notebook-metadata").first().text();
-        console.log("highlight metadata: ", metadata);
+        // console.log("highlight metadata: ", metadata);
         let highlight = $(node).find(".kp-notebook-highlight").first().text();
         var note = $(node).find(".kp-notebook-note").first().text();
         if (note.startsWith("Note:")) {
             note = note.replace("Note:", "")
         }
         let nodeData = {"metadata": metadata, "highlight": highlight, "note": note};
-        console.log("nodeData", nodeData);
+        // console.log("nodeData", nodeData);
         return nodeData
     }
 
@@ -91,7 +91,7 @@
                 console.log("sanitized title: " + sanitizedTitle);
                 browser.runtime.sendMessage({
                     "target": "background",
-                    "command": "check_storage",
+                    "command": "download_stored_kindle_metadata",
                     "storage_key": sanitizedTitle,
                     "message": "book stored/updated"
                 });

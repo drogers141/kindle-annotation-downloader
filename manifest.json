@@ -27,11 +27,19 @@
 
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://read.amazon.com/notebook"],
       "js": [
         "assets/js/jquery-3.4.1.js",
         "assets/js/moment.js",
         "content_scripts/kindle_page.js"
+      ]
+    },
+    {
+      "matches": ["https://app.tergar.org/*"],
+      "js": [
+        "assets/js/jquery-3.4.1.js",
+        "assets/js/moment.js",
+        "content_scripts/tergar_meditation_app.js"
       ]
     }
   ],

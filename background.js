@@ -11,8 +11,8 @@ function reportError(error) {
 }
 
 function notify(message) {
-    if (message.target == "background") {
-        if (message.command == "check_storage") {
+    if (message.target === "background") {
+        if (message.command === "download_stored_kindle_metadata") {
             browser.storage.local.get(message.storage_key)
                 .then((itemsObject) => {
                     console.log("background retrieved storage");
@@ -30,6 +30,23 @@ function notify(message) {
                     // var downloadFile = new File(json, "activeBookMeta.json");
 
                     // download(itemsObject);
+                })
+                .catch(reportError);
+        } else if (message.command === "download_stored_object") {
+            browser.storage.local.get(message.storage_key)
+                .then((itemsObject) => {
+                    console.log(`background retrieved storage: ${message.storage_key}`);
+                    let blob = new Blob([JSON.stringify(itemsObject)]);
+                    let url = URL.createObjectURL(blob);
+                    let timestampString = moment().format().replace(/:/g, '.')
+                    console.log("timestamp: ", timestampString);
+                    browser.downloads.download({
+                        url: url,
+                        filename: message.filename,
+                        conflictAction: "overwrite",
+                        saveAs: false
+                    });
+                    console.log(`background downloaded storage to file: ${message.filename}`);
                 })
                 .catch(reportError);
         } else if (message.command === "download") {
