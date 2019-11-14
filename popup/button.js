@@ -42,19 +42,11 @@ function reportExecuteScriptError(error) {
   console.error(`Failed to execute content script: ${error.message}`);
 }
 
-
 /**
  * When the popup loads, inject a content script into the active tab,
  * and add a click handler.
  * If we couldn't inject the script, handle the error.
  */
-// browser.tabs.executeScript({file: "/content_scripts/kindle_page.js"})
-// .then(listenForClicks)
-// .catch(reportExecuteScriptError);
-
-/**
- * ******** For Tergar Site **********
- */
-browser.tabs.executeScript({file: "/content_scripts/tergar_meditation_app.js"})
-    .then(listenForClicks)
-    .catch(reportExecuteScriptError);
+browser.tabs.executeScript({file: "/content_scripts/kindle_page.js"})
+.then(listenForClicks)
+.catch(reportExecuteScriptError);
