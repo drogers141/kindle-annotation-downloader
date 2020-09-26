@@ -1,11 +1,11 @@
 # kindle-annotation-downloader
 
 In firefox use about:debugging to load this extension as a temporary extension:
-Do this by:
-- navigating to `about:debugging`
-- clicking on `This Firefox` on left side
-- Click Load Temporary Add-on...
-- Navigate to the manifest.json and open it.
+- clone this repo
+- navigate to `about:debugging`
+- click on `This Firefox` on left side
+- click Load Temporary Add-on...
+- navigate to the manifest.json in the cloned repo and select it
 
 This will load the extension.
 
